@@ -45,7 +45,7 @@ function calculateResults(e) {
 // Show Error
 function showError(error) {
     // Show results
-    document.querySelector('#results').style.display = 'block';
+    document.querySelector('#results').style.display = 'none';
     // Hide loader
     document.querySelector('#loading').style.display = "none";
     // Create a div
