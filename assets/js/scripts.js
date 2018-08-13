@@ -1,8 +1,16 @@
-document.querySelector('#loan-form').addEventListener('submit', calculateResults);
+document.querySelector('#loan-form').addEventListener('submit', function(e) {
+    // Hide results
+    document.querySelector('#results').style.display = 'none';
+    // Show loader
+    document.querySelector('#loading').style.display = 'block';
+    // Display results after 2 seconds
+    setTimeout(calculateResults, 2000);
+
+    e.preventDefault(e);
+});
 
 // CalculateResults
 function calculateResults(e) {
-    console.log('Calculating...')
     // UI Variables
     const amount = document.querySelector('#amount');
     const interest = document.querySelector('#interest');
@@ -11,6 +19,7 @@ function calculateResults(e) {
     const totalPayment = document.querySelector('#total-payment');
     const totalInterest = document.querySelector('#total-interest');
 
+    // Calculation variables
     const principal = parseFloat(amount.value);
     const calculatedInterest = parseFloat(interest.value) / 100 / 12;
     const calculatedPayments = parseFloat(years.value) * 12;
@@ -23,15 +32,22 @@ function calculateResults(e) {
         monthlyPayment.value = monthly.toFixed(2);
         totalPayment.value = (monthly * calculatedPayments).toFixed(2);
         totalInterest.value = ((monthly * calculatedPayments) - principal).toFixed(2);
+        
+        // Show results
+        document.querySelector('#results').style.display = 'block';
+        // Hide loader
+        document.querySelector('#loading').style.display = "none";
     } else {
         showError('Error. Please check inputted values');
     }
-
-    e.preventDefault();
 }
 
 // Show Error
 function showError(error) {
+    // Show results
+    document.querySelector('#results').style.display = 'block';
+    // Hide loader
+    document.querySelector('#loading').style.display = "none";
     // Create a div
     const errorDiv = document.createElement('div');
     // Get elements
@@ -43,8 +59,8 @@ function showError(error) {
     errorDiv.appendChild(document.createTextNode(error));
     // Insert error above heading
     card.insertBefore(errorDiv, heading);
-    // Clear error after 3 seconds
-    setTimeout(clearError, 5000);
+    // Clear error after 4 seconds
+    setTimeout(clearError, 4000);
 }
 
 // Clear error
